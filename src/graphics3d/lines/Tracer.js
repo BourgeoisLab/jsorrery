@@ -1,5 +1,5 @@
 
-import { Vector3, Object3D, LineBasicMaterial, Geometry, Line } from 'three';
+import { Vector3, Object3D, LineBasicMaterial, BufferGeometry, Line, BufferAttribute } from 'three';
 import { darken, hexToRgb, rgbToHex } from '../../utils/ColorUtils';
 import { IS_SCREENSHOT, IS_CAPTURE } from '../../core/constants';
 
@@ -29,13 +29,12 @@ export default class Tracer {
 
 		const material = new LineBasicMaterial({
 			color: this.color,
-			lineWidth: 4,
+			linewidth: 4,
 		});
 
-		this.geom = new Geometry();
-		for (let i = 0; i < this.nVertices; i++) {
-			this.geom.vertices.push(new Vector3(0, 0, 0));
-		}
+		this.geom = new BufferGeometry();
+		const pos = new Float32Array(this.nVertices * 3);
+		this.geom.addAttribute('position', new BufferAttribute(pos, 3));
 		this.line = new Line(this.geom, material);
 		this.line.frustumCulled = false;
 		this.currentVertex = 0;
@@ -68,27 +67,52 @@ export default class Tracer {
 	draw(fromPos) {
 		if (!this.geom) return;
 		const pos = this.setTracePos(fromPos);
-		if (this.geom.vertices[this.currentVertex] && this.geom.vertices[this.currentVertex].distanceTo(pos) === 0) return;
-		this.geom.verticesNeedUpdate = true;
+		const posCurrent = new Vector3(
+			this.geom.attributes.position.getX(this.currentVertex),
+			this.geom.attributes.position.getY(this.currentVertex),
+			this.geom.attributes.position.getZ(this.currentVertex)
+		);
+		if (posCurrent && posCurrent.distanceTo(pos) < 1e-3) return;
+		this.geom.attributes.position.needsUpdate = true;
 		
 		if (this.currentVertex < this.lastVertexIdx) {
 			for (let i = this.currentVertex; i < this.nVertices; i++) {
-				this.geom.vertices[i].copy(pos);
+				this.geom.attributes.position.setXYZ(i, pos.x, pos.y, pos.z);
 			}
 		} else {
 			if (this.switchVertex) {
 				for (let i = 0; i < this.lastVertexIdx; i++) {
-					this.geom.vertices[i].copy(this.geom.vertices[i + 1]);
+					this.geom.attributes.position.setXYZ(i,
+						this.geom.attributes.position.getX(i+1),
+						this.geom.attributes.position.getY(i+1),
+						this.geom.attributes.position.getZ(i+1));
 				}
 				this.switchVertex = false;
 			}
-			this.geom.vertices[this.lastVertexIdx].copy(pos);
+			this.geom.attributes.position.setXYZ(this.lastVertexIdx, pos.x, pos.y, pos.z);
 		}
 
-		const v2 = this.geom.vertices[this.currentVertex - 2]; 
-		const v1 = this.geom.vertices[this.currentVertex - 1]; 
-		const v0 = this.geom.vertices[this.currentVertex];
-		
+		let v2 = null
+		let v1 = null
+		let v0 = null
+		if (this.currentVertex >= 2)
+			v2 = new Vector3(
+				this.geom.attributes.position.getX(this.currentVertex - 2),
+				this.geom.attributes.position.getY(this.currentVertex - 2),
+				this.geom.attributes.position.getZ(this.currentVertex - 2)
+			);
+		if (this.currentVertex >= 1)
+			v1 = new Vector3(
+				this.geom.attributes.position.getX(this.currentVertex - 1),
+				this.geom.attributes.position.getY(this.currentVertex - 1),
+				this.geom.attributes.position.getZ(this.currentVertex - 1)
+			);
+		if (this.currentVertex >= 0)
+			v0 = new Vector3(
+				this.geom.attributes.position.getX(this.currentVertex),
+				this.geom.attributes.position.getY(this.currentVertex),
+				this.geom.attributes.position.getZ(this.currentVertex)
+			);
 		if (v1 && v2) {
 
 			if (!this.lastPathDirection) {

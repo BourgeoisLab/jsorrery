@@ -1,5 +1,5 @@
 
-import { LineBasicMaterial, Geometry, BufferAttribute, BufferGeometry, Line, Color, Object3D, Vector3, ShaderMaterial, AdditiveBlending, Points } from 'three';
+import { LineBasicMaterial, BufferAttribute, BufferGeometry, Line, Color, Object3D, Vector3, ShaderMaterial, AdditiveBlending, Points } from 'three';
 import Promise from 'bluebird';
 
 import Constellations from '../data/Constellations';
@@ -61,8 +61,16 @@ function drawConstellations(rendered) {
 			const toPoint = namedStars[toName];
 			if (!toPoint || !fromPoint) return;
 			
-			const orbitGeom = new Geometry();
-			orbitGeom.vertices = [fromPoint, toPoint];
+			const orbitGeom = new BufferGeometry();
+			const pos = new Float32Array([
+				fromPoint.x,
+				fromPoint.y,
+				fromPoint.z,
+				toPoint.x,
+				toPoint.y,
+				toPoint.z
+			]);
+			orbitGeom.addAttribute('position', new BufferAttribute(pos, 3));
 			const line = new Line(orbitGeom, material);
 			line.frustumCulled = false;
 			rendered.add(line);

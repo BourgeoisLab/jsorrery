@@ -1,6 +1,6 @@
 
 
-import { LineBasicMaterial, BufferGeometry, Geometry, Line, BufferAttribute, VertexColors } from 'three';
+import { LineBasicMaterial, BufferGeometry, Line, BufferAttribute, VertexColors } from 'three';
 import Dimensions from '../Dimensions';
 import DebugPoint from '../utils/DebugPoint';
 import { darken, hexToRgb, rgbToHex } from '../../utils/ColorUtils';
@@ -21,9 +21,16 @@ export default class OrbitLine {
 			color: IS_SCREENSHOT || IS_CAPTURE ? this.color : rgbToHex(darken(hexToRgb(this.color), 0.5)),
 		});
 		this.orbitVertices = orbitVertices.map(val => Dimensions.getScaled(val.clone()));
-		const orbitGeom = new Geometry();
-		orbitGeom.vertices = this.orbitVertices;
-
+		this.nVertices = this.orbitVertices.length;
+		const orbitGeom = new BufferGeometry();
+		const pos = new Float32Array(this.nVertices * 3);
+		for (let i = 0; i < this.nVertices; i++) {
+			const v = this.orbitVertices[i];
+			pos[i*3] = v.x
+			pos[i*3+1] = v.y
+			pos[i*3+2] = v.z
+		}
+		orbitGeom.addAttribute('position', new BufferAttribute(pos, 3));
 		return new Line(orbitGeom, material);
 	}
 
