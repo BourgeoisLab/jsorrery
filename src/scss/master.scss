@@ -1,3 +1,4 @@
+@use "sass:math";
 
 $serif : 'Quattrocento', serif;
 $sans:  helvetica, arial, sans-serif;
@@ -170,8 +171,8 @@ body#jsorrery {
 	left:0;
 	border:0.5px rgba(255, 255, 255, 0.2) solid;
 	border-radius: 50%;
-	margin-top:-$sz / 2;
-	margin-left:-$sz / 2;
+	margin-top:math.div(-$sz, 2);
+	margin-left:math.div(-$sz, 2);
 	//display:none !important;
 
 }

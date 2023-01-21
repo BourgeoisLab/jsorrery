@@ -30,6 +30,7 @@ nbproject
 .idea
 
 node_modules
+package-lock.json
 
 _unused
 _reference

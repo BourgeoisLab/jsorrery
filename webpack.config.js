@@ -2,9 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
@@ -30,21 +31,16 @@ const plugins = [
 			NODE_ENV: JSON.stringify(nodeEnv),
 		},
 	}),
-	new webpack.NamedModulesPlugin(),
 	new HtmlWebpackPlugin({
 		template: path.join(sourcePath, 'index.html'),
 		path: buildPath,
 		filename: 'index.html',
+		minify: false
 	}),
 	new webpack.LoaderOptionsPlugin({
 		options: {
 			postcss: [
-				autoprefixer({
-					browsers: [
-						'last 2 version',
-						'ie >= 10',
-					],
-				}),
+				autoprefixer(),
 			],
 			context: sourcePath,
 		},
@@ -70,8 +66,9 @@ const rules = [
 		],
 	},
 	{
-		test: /\.(svg|png|jpg|jpeg|gif|fsh|vsh|json)(\?v=\d+\.\d+\.\d+)?$/,
+		test: /\.(svg|png|jpg|jpeg|gif|fsh|vsh|js|json)(\?v=\d+\.\d+\.\d+)?$/,
 		include: assetsPath,
+		type: 'asset/resource',
 		use: [
 			{
 				loader: 'file-loader?limit=20480',
@@ -83,73 +80,58 @@ const rules = [
 if (isProduction) {
 	// Production plugins
 	plugins.push(
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false,
-				screw_ie8: true,
-				conditionals: true,
-				unused: true,
-				comparisons: true,
-				sequences: true,
-				dead_code: true,
-				evaluate: true,
-				if_return: true,
-				join_vars: true,
-			},
-			output: {
-				comments: false,
-			},
+		new MiniCssExtractPlugin({ filename: 'jsorrery.css' }),
+		new CopyWebpackPlugin({
+			patterns: [
+				{
+					from: assetsPath,
+					to: buildPath + '/' + assetsDirName,
+				}
+			],
 		}),
-		new ExtractTextPlugin('jsorrery.css'),
-		new CopyWebpackPlugin([
-			{
-				from: assetsPath,
-				to: buildPath + '/' + assetsDirName,
-			}
-		])
 	);
 
 	// Production rules
 	rules.push(
 		{
-			test: /\.scss$/,
-			loader: ExtractTextPlugin.extract({
-				fallback: 'style-loader',
-				use: 'css-loader!postcss-loader!sass-loader',
-			}),
+			test: /\.(sa|sc|c)ss$/,
+			use: [
+				MiniCssExtractPlugin.loader,
+				'css-loader',
+				'postcss-loader',
+				'sass-loader'
+			],
 		}
 	);
 } else {
 	// Development plugins
 	plugins.push(
-		new webpack.HotModuleReplacementPlugin()
+		new CopyWebpackPlugin({
+			patterns: [
+				{
+					from: assetsPath,
+					to: buildPath + '/' + assetsDirName,
+				}
+			],
+		}),
 	);
 
 	// Development rules
 	rules.push(
 		{
-			test: /\.scss$/,
+			test: /\.(sa|sc|c)ss$/,
 			use: [
 				'style-loader',
-				// Using source maps breaks urls in the CSS loader
-				// https://github.com/webpack/css-loader/issues/232
-				// This comment solves it, but breaks testing from a local network
-				// https://github.com/webpack/css-loader/issues/232#issuecomment-240449998
-				// 'css-loader?sourceMap',
 				'css-loader',
-				{
-					loader: 'postcss-loader',
-					options: { sourceMap: true },
-				},
-				'sass-loader?sourceMap',
+				'postcss-loader',
+				'sass-loader',
 			],
-			
 		}
 	);
 }
 
 module.exports = {
-	devtool: isProduction ? false : 'source-map',
+	mode: isProduction ? 'production' : 'development',
 	context: jsSourcePath,
 	entry: {
 		js: './index.js',
@@ -158,6 +140,15 @@ module.exports = {
 		path: buildPath,
 		publicPath: isProduction ? '' : '/',
 		filename: 'jsorrery.js',
+	},
+	optimization: {
+		minimize: isProduction,
+		minimizer: [new TerserPlugin({
+			extractComments: false
+		})],
+	},
+	performance: {
+		hints: false,
 	},
 	module: {
 		rules,
@@ -174,29 +165,13 @@ module.exports = {
 	},
 	plugins,
 	devServer: {
-		contentBase: isProduction ? buildPath : sourcePath,
+		static: {
+			directory: isProduction ? buildPath : sourcePath,
+		},
 		historyApiFallback: true,
 		port: 2018,
 		compress: isProduction,
-		inline: !isProduction,
-		hot: !isProduction,
 		host: '0.0.0.0',
-		//to make sure that any host will work (provided it points to 127.0.0.1 and has the correct port)
-		disableHostCheck: true,
-		stats: {
-			assets: true,
-			children: false,
-			chunks: false,
-			hash: false,
-			modules: false,
-			publicPath: false,
-			timings: true,
-			version: false,
-			warnings: true,
-			colors: {
-				green: '\u001b[32m',
-			},
-		},
 		headers: {
 			"Access-Control-Allow-Origin": "*",
 		}

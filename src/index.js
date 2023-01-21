@@ -1,6 +1,6 @@
 
 import $ from 'jquery';
-import 'style-loader!./scss/master.scss';
+import './scss/master.scss';
 
 import JSOrrery from './core/JSOrrery';
 
