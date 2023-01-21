@@ -169,13 +169,13 @@ export default class Gui {
 
 					close.on('click.jsorrery', () => {
 						shown = hideContent(content);
-						fadeGui(shown);
+						this.fadeGui(shown);
 					});
 				}
 				// console.log(content);
 				hideContent(allHelpContents.not(content));
 				shown = shown ? hideContent(content) : showContent(content);
-				fadeGui(shown);
+				this.fadeGui(shown);
 			});
 		});
 		//default open help on load page, if any

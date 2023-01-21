@@ -122,6 +122,9 @@ export default {
 
 			if (lastPoint) {
 				angle = point.angleTo(lastPoint) * RAD_TO_DEG;
+				if (angle === 0) {
+					break
+				}
 				//make sure we do not go over 360.5 
 				if (angle > 1.3 || ((angle + total) > 360.5)) {
 					for (let j = 0; j < angle; j++) {

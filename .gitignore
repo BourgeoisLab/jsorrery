@@ -36,4 +36,5 @@ _unused
 _reference
 _workdir
 build
+dist
 npm-debug.log
