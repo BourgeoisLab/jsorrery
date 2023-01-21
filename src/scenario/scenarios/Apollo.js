@@ -1,7 +1,7 @@
 
 import { getMissionFromName } from './NasaNumbers';
-import { earth } from './bodies/earth';
-import { moon } from './bodies/moon';
+import { earth } from './bodies/planets/earth';
+import { moon } from './bodies/moons/moon';
 import { getDateFromJD } from '../../utils/JD';
 
 

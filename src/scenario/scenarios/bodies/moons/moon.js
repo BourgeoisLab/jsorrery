@@ -1,7 +1,7 @@
 import { TweenMax, Sine } from 'gsap';
-import { DAY } from '../../../core/constants';
-import MoonRealOrbit from './moon/OsculatingOrbit';
-import { ELP82B } from './moon/elp';
+import { DAY } from '../../../../core/constants';
+import MoonRealOrbit from '../moons/moon/OsculatingOrbit';
+import { ELP82B } from '../moons/moon/elp';
 
 export const moon = {
 	title: 'The Moon',

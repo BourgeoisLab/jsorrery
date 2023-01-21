@@ -10,12 +10,12 @@ radius: km
 import Promise from 'bluebird';
 import $ from 'jquery';
 import { AU } from '../../core/constants';
-import { moon } from './bodies/moon';
-import { sun } from './bodies/sun';
-import { mercury } from './bodies/mercury';
-import { venus } from './bodies/venus';
-import { earth } from './bodies/earth';
-import { mars } from './bodies/mars';
+import { moon } from './bodies/moons/moon';
+import { sun } from './bodies/stars/sun';
+import { mercury } from './bodies/planets/mercury';
+import { venus } from './bodies/planets/venus';
+import { earth } from './bodies/planets/earth';
+import { mars } from './bodies/planets/mars';
 
 
 const baseNEO = {

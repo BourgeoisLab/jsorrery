@@ -4,7 +4,7 @@ Corrections have been added to element's altitude to compensate for imprecisions
 
 */
 import { DAY } from '../../core/constants';
-import { earth } from './bodies/earth';
+import { earth } from './bodies/planets/earth';
 import { Mercury7, Mercury8 } from './NasaNumbers';
 import { getJD } from '../../utils/JD';
 

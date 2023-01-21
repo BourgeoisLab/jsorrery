@@ -1,10 +1,10 @@
 
-import { sun } from './bodies/sun';
-import { moon } from './bodies/moon';
-import { mercury } from './bodies/mercury';
-import { venus } from './bodies/venus';
-import { earth } from './bodies/earth';
-import { mars } from './bodies/mars';
+import { sun } from './bodies/stars/sun';
+import { moon } from './bodies/moons/moon';
+import { mercury } from './bodies/planets/mercury';
+import { venus } from './bodies/planets/venus';
+import { earth } from './bodies/planets/earth';
+import { mars } from './bodies/planets/mars';
 
 export default {
 	name: 'InnerSolarSystem',

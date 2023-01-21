@@ -1,5 +1,5 @@
 
-import { AU, DAY } from '../../../core/constants';
+import { AU, DAY } from '../../../../core/constants';
 
 export const mars = {
 	title: 'Mars',

@@ -1,6 +1,6 @@
 
 // source http://ssd.jpl.nasa.gov/?sat_elem
-import { jupiter } from './bodies/jupiter';
+import { jupiter } from './bodies/planets/jupiter';
 
 export default {
 	name: 'JupiterMoon',

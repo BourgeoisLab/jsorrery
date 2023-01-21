@@ -1,14 +1,14 @@
 
-import { sun } from './bodies/sun';
-import { mercury } from './bodies/mercury';
-import { venus } from './bodies/venus';
-import { earth } from './bodies/earth';
-import { mars } from './bodies/mars';
-import { jupiter } from './bodies/jupiter';
-import { saturn } from './bodies/saturn';
-import { uranus } from './bodies/uranus';
-import { neptune } from './bodies/neptune';
-import { pluto } from './bodies/pluto';
+import { sun } from './bodies/stars/sun';
+import { mercury } from './bodies/planets/mercury';
+import { venus } from './bodies/planets/venus';
+import { earth } from './bodies/planets/earth';
+import { mars } from './bodies/planets/mars';
+import { jupiter } from './bodies/planets/jupiter';
+import { saturn } from './bodies/planets/saturn';
+import { uranus } from './bodies/planets/uranus';
+import { neptune } from './bodies/planets/neptune';
+import { pluto } from './bodies/transneptunian/pluto';
 
 export default {
 	name: 'SolarSystem',

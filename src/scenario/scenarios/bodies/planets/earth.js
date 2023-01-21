@@ -1,9 +1,9 @@
 
 // import $ from 'jquery';
 import { Color, Euler, Vector3 } from 'three';
-import { J2000, AU, SIDEREAL_DAY, NM_TO_KM, CIRCLE, YEAR, DAY, DEG_TO_RAD } from '../../../core/constants';
-import { J2000Date, getDeltaT } from '../../../utils/JD';
-import { VSOP } from './earth/VSOP-earth';
+import { J2000, AU, SIDEREAL_DAY, NM_TO_KM, CIRCLE, YEAR, DAY, DEG_TO_RAD } from '../../../../core/constants';
+import { J2000Date, getDeltaT } from '../../../../utils/JD';
+import { VSOP } from '../planets/earth/VSOP-earth';
 
 //time from where rotation is computed: the solstice before system's reference time (J2000)
 //solar noon at J2000 was 12:03:18, azimut at 12:00 was 179.15

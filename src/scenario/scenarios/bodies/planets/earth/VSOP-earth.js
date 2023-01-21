@@ -1,6 +1,6 @@
 import { Vector3 } from 'three';
-import { AU, KM, J2000 } from '../../../../core/constants';
-import { getJ2000SecondsFromJD } from '../../../../utils/JD';
+import { AU, KM, J2000 } from '../../../../../core/constants';
+import { getJ2000SecondsFromJD } from '../../../../../utils/JD';
 
 /*subroutine VSOP87 (tdj,ivers,ibody,prec,lu,r,ierr)
 *-----------------------------------------------------------------------

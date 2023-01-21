@@ -1,6 +1,6 @@
 
-import { earth } from './bodies/earth';
-import { moon } from './bodies/moon';
+import { earth } from './bodies/planets/earth';
+import { moon } from './bodies/moons/moon';
 
 export default {
 	usePhysics: true,

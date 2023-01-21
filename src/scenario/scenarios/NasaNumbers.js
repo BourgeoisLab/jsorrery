@@ -2,7 +2,7 @@
 	source for calculations http://www.braeunig.us/apollo/apollo11-TLI.htm
 */
 import { DEG_TO_RAD, RAD_TO_DEG, FT_TO_M, KM, CIRCLE, DAY } from '../../core/constants';
-import { earth } from './bodies/earth';
+import { earth } from './bodies/planets/earth';
 import { getJD } from '../../utils/JD';
 
 

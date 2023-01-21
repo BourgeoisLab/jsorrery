@@ -1,5 +1,5 @@
 
-import { AU } from '../../../core/constants';
+import { AU } from '../../../../core/constants';
 
 export const neptune = {
 	title: 'Neptune',

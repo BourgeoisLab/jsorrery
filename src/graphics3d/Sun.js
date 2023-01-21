@@ -3,7 +3,7 @@ import ResourceLoader from '../loaders/ResourceLoader';
 import Dimensions from './Dimensions';
 import { KM, DEG_TO_RAD } from '../core/constants';
 import Body3D from './Body3d';
-import { radius as sunRadius } from '../scenario/scenarios/bodies/sun';
+import { radius as sunRadius } from '../scenario/scenarios/bodies/stars/sun';
 
 
 class SunCorona {

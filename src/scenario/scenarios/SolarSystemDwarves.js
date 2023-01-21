@@ -1,19 +1,19 @@
 
-import { sun } from './bodies/sun';
-import { mercury } from './bodies/mercury';
-import { venus } from './bodies/venus';
-import { earth } from './bodies/earth';
-import { mars } from './bodies/mars';
-import { jupiter } from './bodies/jupiter';
-import { saturn } from './bodies/saturn';
-import { uranus } from './bodies/uranus';
-import { neptune } from './bodies/neptune';
-import { pluto } from './bodies/pluto';
-import { halley } from './bodies/halley';
-import { ceres } from './bodies/ceres';
-import { eris } from './bodies/eris';
-import { makemake } from './bodies/makemake';
-import { haumea } from './bodies/haumea';
+import { sun } from './bodies/stars/sun';
+import { mercury } from './bodies/planets/mercury';
+import { venus } from './bodies/planets/venus';
+import { earth } from './bodies/planets/earth';
+import { mars } from './bodies/planets/mars';
+import { jupiter } from './bodies/planets/jupiter';
+import { saturn } from './bodies/planets/saturn';
+import { uranus } from './bodies/planets/uranus';
+import { neptune } from './bodies/planets/neptune';
+import { pluto } from './bodies/transneptunian/pluto';
+import { halley } from './bodies/comets/halley';
+import { ceres } from './bodies/asteroids/ceres';
+import { eris } from './bodies/transneptunian/eris';
+import { makemake } from './bodies/transneptunian/makemake';
+import { haumea } from './bodies/transneptunian/haumea';
 
 export default {
 	name: 'SolarSystemDwarves',
