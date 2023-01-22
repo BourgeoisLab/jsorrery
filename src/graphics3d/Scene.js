@@ -26,6 +26,7 @@ export default class JSOrreryScene {
 		this.width = (scenario.sceneSize && scenario.sceneSize.width) || rootDomEl.offsetWidth;
 		this.height = (scenario.sceneSize && scenario.sceneSize.height) || rootDomEl.offsetHeight;
 
+		this.scenario = scenario;
 		this.universe = universe;
 		this.bodies3d = [];
 		this.bodyScale = 1;
@@ -80,7 +81,9 @@ export default class JSOrreryScene {
 		this.cameraManager = new CameraManager(this, this.width / this.height, scenario.fov, this.stageSize, this.domEl, universe, this.orbitLinesManager, this.tracerManager, gui);
 		this.labels = new Labels(this.domEl, this.cameraManager);
 
-		this.setMilkyway();
+		if (!scenario.hideMilkyWay) {
+			this.setMilkyway();
+		}
 
 	}
 
@@ -163,7 +166,9 @@ export default class JSOrreryScene {
 			body3d = new Body3D(celestialBody);
 		}
 
-		this.labels.addPlanetLabel(celestialBody.title || celestialBody.name, body3d);
+		if (!this.scenario.hideBodyLabels) {
+			this.labels.addPlanetLabel(celestialBody.title || celestialBody.name, body3d);
+		}
 
 		this.bodies3d.push(body3d);
 		this.root.add(body3d.getDisplayObject());

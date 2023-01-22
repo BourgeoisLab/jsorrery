@@ -10,6 +10,9 @@ This repository is a fork from [mgvez/jsorrery](https://github.com/mgvez/jsorrer
 **Changes:**
 - Update to *Webpack 5*
 - Reorganized *bodies* directory into subdirectories
+- New scenario settings:
+  - *hideMilkyWay*: hides the Milky Way
+  - *hideBodyLabels*: hides the planet labels
 
 # Usage
 
