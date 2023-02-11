@@ -17,67 +17,48 @@ export default class OrbitLine {
 	}
 
 	createSolidLine(orbitVertices) {
+		this.orbitVertices = orbitVertices.map(val => Dimensions.getScaled(val.clone()));
+		this.nVertices = this.orbitVertices.length;
+		this.geometry = new BufferGeometry();
+		this.positions = new Float32Array(this.nVertices * 3);
+		this.buildPositions();
+		this.geometry.addAttribute('position', new BufferAttribute(this.positions, 3));
 		const material = new LineBasicMaterial({
 			color: IS_SCREENSHOT || IS_CAPTURE ? this.color : rgbToHex(darken(hexToRgb(this.color), 0.5)),
 		});
-		this.orbitVertices = orbitVertices.map(val => Dimensions.getScaled(val.clone()));
-		this.nVertices = this.orbitVertices.length;
-		const orbitGeom = new BufferGeometry();
-		const pos = new Float32Array(this.nVertices * 3);
-		for (let i = 0; i < this.nVertices; i++) {
-			const v = this.orbitVertices[i];
-			pos[i*3] = v.x
-			pos[i*3+1] = v.y
-			pos[i*3+2] = v.z
-		}
-		orbitGeom.addAttribute('position', new BufferAttribute(pos, 3));
-		return new Line(orbitGeom, material);
+		return new Line(this.geometry, material);
 	}
 
 	createGradientLine(orbitVertices) {
-		const l = orbitVertices.length;
-		this.orbitVertices = orbitVertices.map((val) => {
-			return Dimensions.getScaled(val.clone());
-		});
-
+		this.orbitVertices = orbitVertices.map(val => Dimensions.getScaled(val.clone()));
 		this.nVertices = this.orbitVertices.length;
-
-		const nNumbers = this.nPos = l * 3;
-
-		const pos = this.positions = new Float32Array(3 + nNumbers);
+		this.geometry = new BufferGeometry();
+		this.positions = new Float32Array(this.nVertices * 3 + 3);
 		this.buildPositions();
-
-		pos[nNumbers] = this.orbitVertices[0].x;
-		pos[nNumbers + 1] = this.orbitVertices[0].y;
-		pos[nNumbers + 2] = this.orbitVertices[0].z;
-		
+		this.positions[this.nVertices * 3] = this.orbitVertices[0].x;
+		this.positions[this.nVertices * 3 + 1] = this.orbitVertices[0].y;
+		this.positions[this.nVertices * 3 + 2] = this.orbitVertices[0].z;
+		this.geometry.addAttribute('position', new BufferAttribute(this.positions, 3));
 
 		const origColor = hexToRgb(this.color);
 		const colors = orbitVertices.map((v, i) => {
-			// return origColor;
-			return darken(origColor, 1 - i / l);
+			return darken(origColor, 1 - i / this.nVertices);
 		}).reduce((a, c, i) => {
 			const n = i * 3;			
 			a[n] = c.r / 255;
 			a[n + 1] = c.g / 255;
 			a[n + 2] = c.b / 255;
 			return a;
-		}, new Float32Array(3 + nNumbers));
-		
-		colors[nNumbers] = origColor.r / 255;
-		colors[nNumbers + 1] = origColor.g / 255;
-		colors[nNumbers + 2] = origColor.b / 255;
-
+		}, new Float32Array(3 + this.nVertices * 3));
+		colors[this.nVertices * 3] = origColor.r / 255;
+		colors[this.nVertices * 3 + 1] = origColor.g / 255;
+		colors[this.nVertices * 3 + 2] = origColor.b / 255;
 		const material = new LineBasicMaterial({
 			vertexColors: VertexColors,
 		});
-		const orbitGeom = this.geometry = new BufferGeometry();
+		this.geometry.addAttribute('color', new BufferAttribute(colors, 3));
 
-		orbitGeom.addAttribute('position', new BufferAttribute(pos, 3));
-		
-		orbitGeom.addAttribute('color', new BufferAttribute(colors, 3));
-
-		return new Line(orbitGeom, material);
+		return new Line(this.geometry, material);
 	}
 
 	buildPositions() {
@@ -138,10 +119,9 @@ export default class OrbitLine {
 			// }
 		}
 
-		this.positions[this.nPos] = pos.x;
-		this.positions[this.nPos + 1] = pos.y;
-		this.positions[this.nPos + 2] = pos.z;
-
+		this.positions[this.nVertices * 3] = pos.x;
+		this.positions[this.nVertices * 3 + 1] = pos.y;
+		this.positions[this.nVertices * 3 + 2] = pos.z;
 	}
 	
 

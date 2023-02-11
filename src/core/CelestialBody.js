@@ -119,7 +119,6 @@ export default {
 		const arrayAction = isFuture ? 'push' : 'unshift';
 		for (let i = 0; total < 360; i++) {
 			point = this.calculatePosition(startTime + (multiplyer * incr * i) / DAY);
-
 			if (lastPoint) {
 				angle = point.angleTo(lastPoint) * RAD_TO_DEG;
 				if (angle === 0) {
@@ -131,20 +130,18 @@ export default {
 						step = (incr * (i - 1)) + ((incr / angle) * j);
 						point = this.calculatePosition(startTime + (multiplyer * step) / DAY);
 						
+						total += point.angleTo(lastPoint) * RAD_TO_DEG;
+						points[arrayAction](point);
+						lastPoint = point;
+
 						//when finishing the circle try to avoid going too far over 360 (break after first point going over 360)
 						if (total > 358) {
 							angleToPrevious = point.angleTo(points[0]) * RAD_TO_DEG;
 							if ((angleToPrevious + total) > 360) {
-								points[arrayAction](point);
 								break;
 							} 
 						}
-
-						points[arrayAction](point);
-						
 					}
-					total += point.angleTo(lastPoint) * RAD_TO_DEG;
-					lastPoint = point;
 					continue;
 				}
 				total += angle;
