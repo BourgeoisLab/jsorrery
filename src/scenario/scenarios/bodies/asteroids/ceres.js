@@ -1,6 +1,5 @@
 
 import { AU } from '../../../../core/constants';
-import { getJD } from '../../../../utils/JD';
 
 export const ceres = {
 	title: 'Ceres',
@@ -12,7 +11,7 @@ export const ceres = {
 		epoch: 2449731.5,
 		base: {
 			a: 2.767218108003098 * AU,
-			e: 0.07610292126891821, 
+			e: 0.07610292126891821,
 			w: 71.44921526124109,
 			M: 340.389084821267,
 			i: 10.60069567603618,
