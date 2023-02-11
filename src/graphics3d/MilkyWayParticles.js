@@ -78,7 +78,7 @@ function drawConstellations(rendered) {
 	});
 }
 
-function generateStars(shaders, stars, starTexture, size, rendered) {
+function generateStars(shaders, stars, starTexture, size, showConstellations, rendered) {
 	
 	const geometry = new BufferGeometry();
 	const count = stars.length;
@@ -149,13 +149,14 @@ function generateStars(shaders, stars, starTexture, size, rendered) {
 	const particleSystem = new Points(geometry, shaderMaterial);
 	
 	rendered.add(particleSystem);
-	drawConstellations(rendered);
+	if (showConstellations)
+		drawConstellations(rendered);
 
 }
 
 export default class MilkyWay {
 	
-	constructor(size) {
+	constructor(size, showConstellations) {
 		
 		// create the particle system
 		this.displayObj = new Object3D();
@@ -170,7 +171,7 @@ export default class MilkyWay {
 		this.onLoaded = Promise.all([onShaderLoaded, onDataLoaded, starTextureLoader]).then(response => {
 			const [shaderResponse, dataResponse, textureResponse] = response;
 			// console.log(dataResponse);
-			generateStars(shaderResponse, dataResponse, textureResponse, size, this.displayObj);
+			generateStars(shaderResponse, dataResponse, textureResponse, size, showConstellations, this.displayObj);
 		});
 	}
 

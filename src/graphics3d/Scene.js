@@ -82,7 +82,7 @@ export default class JSOrreryScene {
 		this.labels = new Labels(this.domEl, this.cameraManager);
 
 		if (!scenario.hideMilkyWay) {
-			this.setMilkyway();
+			this.setMilkyway(!scenario.hideConstellations);
 		}
 
 	}
@@ -91,8 +91,8 @@ export default class JSOrreryScene {
 		this.cameraManager.putDefaults(settings);
 	}
 
-	setMilkyway() {
-		const milkyway = this.milkyway = new MilkyWay(this.stageSize * 6);
+	setMilkyway(showConstellations) {
+		const milkyway = this.milkyway = new MilkyWay(this.stageSize * 6, showConstellations);
 		this.root.add(milkyway.getDisplayObject());
 	}
 

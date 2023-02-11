@@ -12,7 +12,9 @@ This repository is a fork from [mgvez/jsorrery](https://github.com/mgvez/jsorrer
 - Reorganized *bodies* directory into subdirectories
 - New scenario settings:
   - *hideMilkyWay*: hides the Milky Way
+  - *hideConstellations*: hides the Milky Way constellations
   - *hideBodyLabels*: hides the planet labels
+- Fixed a bug in getOrbitVertices()
 
 # Usage
 
