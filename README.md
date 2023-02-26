@@ -8,6 +8,7 @@ See the project live at [orrery.com] (http://orrery.com). Thanks to [@neave] (ht
 This repository is a fork from [mgvez/jsorrery](https://github.com/mgvez/jsorrery) which seems to be dormant.
 
 **Changes:**
+- Update to *Three.js r95*
 - Update to *Webpack 5*
 - Reorganized *bodies* directory into subdirectories
 - More bodies

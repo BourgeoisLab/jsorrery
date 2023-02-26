@@ -45,7 +45,7 @@
     "gsap": "^3.11.4",
     "jquery": "^3.6.3",
     "jquery-mousewheel": "^3.1.13",
-    "three": "^0.82.1"
+    "three": "^0.95.0"
   },
   "browser": {
     "three.OrbitControls": "./node_modules/three/examples/js/controls/OrbitControls.js",
